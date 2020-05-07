@@ -17,8 +17,22 @@ router.post('/', validateUser, (req, res) => {
   })
 });
 
-router.post('/:id/posts', (req, res) => {
-  // do your magic!
+router.post('/:id/posts', [validateUserId, validatePost], (req, res) => {
+  const theUser = req.body
+  const id = req.params.id
+  theUser.user_id = id
+
+  postDb.insert(theUser)
+  .then(user => {
+    res.status(201).json({user})
+  })
+  .catch(error => {
+    console.log(error)
+    res.status(500).json({
+      errorMessage: 'post not created'
+    })
+  })
+
 });
 
 router.get('/', (req, res) => {
@@ -132,7 +146,14 @@ function validateUser(req, res, next) {
 
 
 function validatePost(req, res, next) {
-  // do your magic!
+  const theBody = req.body
+  if(theBody) {
+    if(theBody.text) {
+      next();
+    } else {
+      res.status(400).json({ errorMessage: 'Missing post data'})
+    }
+  }
 }
 
 module.exports = router;
