@@ -1,23 +1,26 @@
-const express = require("express"); 
-const postsRouter = require("./posts/postRouter")
+const express = require("express");
+const morgan = require("morgan");
+const postsRouter = require("./posts/postRouter");
 
 const server = express();
-const port = 1337;
+// const port = 1337;
 
 // global middleware
-server.use(express.json());
-
-server.use(function(req, res, next) {
-  const today = new Date().toISOString(); // YYYY-MM-DD mdn javascript date methods
-  console.log(`[${today}] This is a request with string interpolation!`);
-  next();
-})
-server.use('/api/users', postsRouter);
+server.use(logger);
 
 server.get('/', (req, res) => {
-  res.send('❤ ❤ ❤ L I V E ❤ ❤ ❤')
+  console.log('H O M E')
+  res.send(`❤ ❤ ❤ H O M E ❤ ❤ ❤`)
 })
+
+function logger(req, res, next) {
+  const today = new Date().toTimeString();
+  console.log(`[${today}] ${req.method} to ${req.url}.`);
+  next()
+}
 
 server.listen(port, () => {
   console.log(`\n ❤ ❤ ❤	 LIVE  ON  ${port} ❤ ❤ ❤	`)
 })
+
+// module.exports = server;
