@@ -1,13 +1,13 @@
-const express = require("express");
-const morgan = require("morgan");
-const postsRouter = require("./posts/postRouter");
+// const express = require("express");
+// const morgan = require("morgan");
+// const postsRouter = require("./posts/postRouter");
 
-const server = express();
+// const server = express();
 // const port = 1337;
 
 // global middleware
-server.use(express.json());
-server.use(morgan("tiny"))
+// server.use(express.json());
+// server.use(morgan("tiny"))
   // server.use(function(req, res, next) {
   // const today = new Date().toISOString(); // YYYY-MM-DD mdn javascript date methods
   // console.log(`[${today}] ${req.method} to ${req.url}. This is a request with string interpolation!`);

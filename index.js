@@ -1,26 +1,26 @@
-const express = require("express");
-const morgan = require("morgan");
-const postsRouter = require("./posts/postRouter");
-
+const express = require('express');
+const middleware = require('./server.js');
+const userRouter = require('./users/userRouter');
+const postRouter = require('./posts/postRouter')
+const port = 1337;
 const server = express();
-// const port = 1337;
 
 // global middleware
-server.use(logger);
+server.use(express.json())
+server.use(middleware.logger);
+
+// routers
+server.use('/api/users', userRouter);
+server.use('/api/posts', postRouter);
+
+// first endpoint
 
 server.get('/', (req, res) => {
   console.log('H O M E')
   res.send(`❤ ❤ ❤ H O M E ❤ ❤ ❤`)
 })
 
-function logger(req, res, next) {
-  const today = new Date().toTimeString();
-  console.log(`[${today}] ${req.method} to ${req.url}.`);
-  next()
-}
-
+// listener
 server.listen(port, () => {
   console.log(`\n ❤ ❤ ❤	 LIVE  ON  ${port} ❤ ❤ ❤	`)
 })
-
-// module.exports = server;
